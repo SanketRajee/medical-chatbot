@@ -8,7 +8,10 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install dependencies
-# We use --no-cache-dir to keep the image size down
+# 1. Install CPU-only PyTorch first (default PyTorch is ~2.5GB with CUDA and crashes Docker builds)
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+# 2. Install the rest of the requirements
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the container
