@@ -50,4 +50,25 @@ GOOGLE_API_KEY="your-gemini-key"
 python -m uvicorn app.main:app --host 0.0.0.0 --port 5000
 ```
 
+## Using Docker
+
+If you have Docker installed, you can easily containerize and run the application without installing Python locally.
+
+```bash
+# 1. Build the Docker image
+docker build -t medical-chatbot .
+
+# 2. Run the container (Make sure you pass your API keys!)
+docker run -p 5000:5000 \
+  -e PINECONE_API_KEY="your-pinecone-key" \
+  -e GOOGLE_API_KEY="your-gemini-key" \
+  medical-chatbot
+```
+
+Or, if you have your `.env` file set up locally, you can use it directly:
+
+```bash
+docker run -p 5000:5000 --env-file .env medical-chatbot
+```
+
 Open **http://localhost:5000** in your browser.
